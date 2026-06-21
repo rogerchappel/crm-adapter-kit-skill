@@ -1,0 +1,9 @@
+{
+  "id": "contact-1",
+  "type": "contact",
+  "adapter": "hubspot-like",
+  "fields": {
+    "name": "Ada Lovelace",
+    "email": " ADA@EXAMPLE.COM "
+  }
+}

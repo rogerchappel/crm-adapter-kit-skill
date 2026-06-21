@@ -1,9 +1,14 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { execFileSync, spawnSync } = require('node:child_process');
-const { missingFields, normalizeRecord, planAdapterAction } = require('../src');
+const { isIsoDate, missingFields, normalizeRecord, planAdapterAction, planBatch, renderSummary, validateRecord } = require('../src');
 test('normalizes contact email', () => { const r = normalizeRecord({ type: 'contact', fields: { name: 'Ada', email: ' ADA@EXAMPLE.COM ' } }); assert.equal(r.fields.email, 'ada@example.com'); });
 test('reports missing required fields', () => { assert.deepEqual(missingFields('task', { title: 'Follow up' }), ['contactId']); });
-test('plans approved dry-run CRM action', () => { const plan = planAdapterAction({ type: 'contact', fields: { name: 'Ada', email: 'ada@example.com' } }); assert.equal(plan.ok, true); assert.equal(plan.action.dryRun, true); assert.equal(plan.approval.required, true); });
+test('plans approved dry-run CRM action', () => { const plan = planAdapterAction({ type: 'contact', fields: { name: 'Ada', email: 'ada@example.com' } }, { adapter: 'hubspot' }); assert.equal(plan.ok, true); assert.equal(plan.action.adapter, 'hubspot'); assert.equal(plan.action.dryRun, true); assert.equal(plan.approval.required, true); });
+test('validates unsafe fields', () => { assert.equal(isIsoDate('2026-06-30'), true); assert.equal(isIsoDate('next week'), false); assert.deepEqual(validateRecord({ type: 'task', fields: { contactId: 'c1', title: 'Follow', dueDate: 'next week' } }), ['dueDate must be YYYY-MM-DD']); });
+test('plans batch CRM actions', () => { const plan = planBatch({ records: [{ type: 'contact', fields: { name: 'Ada', email: 'ada@example.com' } }, { type: 'task', fields: { contactId: 'c1', title: 'Follow', priority: 'HIGH' } }] }); assert.equal(plan.ok, true); assert.equal(plan.count, 2); assert.equal(plan.plans[1].action.fields.priority, 'high'); });
+test('renders markdown summary', () => { const plan = planAdapterAction({ id: 'contact-1', type: 'contact', fields: { name: 'Ada', email: 'ada@example.com' } }); const summary = renderSummary(plan); assert.match(summary, /^# CRM adapter dry-run plan/); assert.match(summary, /ready for approval/); });
 test('cli emits JSON for valid fixture', () => { const out = execFileSync(process.execPath, ['bin/crm-adapter-kit.js', 'fixtures/contact-request.json'], { encoding: 'utf8' }); assert.equal(JSON.parse(out).ok, true); });
 test('cli exits nonzero for invalid fixture', () => { const r = spawnSync(process.execPath, ['bin/crm-adapter-kit.js', 'fixtures/bad-task-request.json'], { encoding: 'utf8' }); assert.equal(r.status, 2); assert.match(r.stdout, /missing field/); });
+test('cli supports batch markdown and adapter option', () => { const out = execFileSync(process.execPath, ['bin/crm-adapter-kit.js', 'fixtures/batch-request.json', '--adapter=pipedrive', '--format=markdown'], { encoding: 'utf8' }); assert.match(out, /upsert_contact via pipedrive/); assert.match(out, /upsert_task via pipedrive/); });
+test('cli blocks malformed due dates', () => { const r = spawnSync(process.execPath, ['bin/crm-adapter-kit.js', 'fixtures/bad-date-request.json'], { encoding: 'utf8' }); assert.equal(r.status, 2); assert.match(r.stdout, /dueDate must be YYYY-MM-DD/); });

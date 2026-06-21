@@ -7,6 +7,7 @@ Local-first CRM adapter planning kit for agent skills with schema checks and app
 ```bash
 npm test
 npm run smoke
+npm run release:check
 ```
 
 ## CLI

@@ -1,0 +1,23 @@
+{
+  "name": "crm-adapter-kit-skill",
+  "version": "0.1.0",
+  "description": "Local-first CRM adapter planning kit for agent skills with schema checks and approval notes.",
+  "type": "commonjs",
+  "bin": {
+    "crm-adapter-kit": "bin/crm-adapter-kit.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check src/index.js && node --check bin/crm-adapter-kit.js",
+    "build": "node scripts/build.js",
+    "smoke": "node bin/crm-adapter-kit.js fixtures/contact-request.json"
+  },
+  "keywords": [
+    "agent-skill",
+    "crm",
+    "adapter",
+    "dry-run"
+  ],
+  "author": "Roger Chappel",
+  "license": "MIT"
+}

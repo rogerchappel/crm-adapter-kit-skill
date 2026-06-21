@@ -13,9 +13,18 @@ npm run smoke
 
 ```bash
 crm-adapter-kit fixtures/contact-request.json
+crm-adapter-kit fixtures/batch-request.json --adapter=hubspot --format=markdown
 ```
 
-The CLI validates a sanitized CRM request, normalizes fields, and prints a dry-run action envelope.
+The CLI validates sanitized CRM requests, normalizes fields, and prints dry-run action envelopes. A fixture can contain one record or a `records` array for a batch plan.
+
+## Validation
+
+- Contacts require `name` and `email`; emails are trimmed and lowercased.
+- Notes require `contactId` and `body`.
+- Tasks require `contactId` and `title`; optional `dueDate` must be `YYYY-MM-DD`.
+- `--adapter=name` changes the planned adapter label without calling that system.
+- `--format=markdown` renders a review summary for approval packets.
 
 ## Safety notes
 

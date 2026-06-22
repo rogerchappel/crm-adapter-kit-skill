@@ -6,7 +6,7 @@ Use when an agent needs to prepare a CRM contact, note, or task payload and capt
 
 ## Required inputs
 
-- A sanitized JSON request with `type` and `fields`.
+- A sanitized JSON request with `type` and `fields`, or a `records` array for batch planning.
 - Local shell access for the CLI and tests.
 
 ## Side-effect boundaries
@@ -22,8 +22,9 @@ CRM writes require explicit human approval in a separate workflow. Save the gene
 ```bash
 npm run smoke
 node bin/crm-adapter-kit.js fixtures/contact-request.json
+node bin/crm-adapter-kit.js fixtures/batch-request.json --adapter=hubspot --format=markdown
 ```
 
 ## Validation workflow
 
-Run `npm test`, `npm run check`, `npm run build`, `npm run smoke`, and `bash scripts/validate.sh`.
+Run `npm test`, `npm run check`, `npm run build`, `npm run smoke`, and `bash scripts/validate.sh`. Confirm invalid task fixtures fail nonzero, and attach the Markdown batch summary when requesting approval for a real CRM workflow.

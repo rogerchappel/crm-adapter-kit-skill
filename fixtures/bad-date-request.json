@@ -1,0 +1,8 @@
+{
+  "type": "task",
+  "fields": {
+    "contactId": "contact-1",
+    "title": "Follow up",
+    "dueDate": "next week"
+  }
+}

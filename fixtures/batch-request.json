@@ -1,0 +1,22 @@
+{
+  "records": [
+    {
+      "id": "contact-1",
+      "type": "contact",
+      "fields": {
+        "name": " Ada Lovelace ",
+        "email": " ADA@EXAMPLE.COM "
+      }
+    },
+    {
+      "id": "task-1",
+      "type": "task",
+      "fields": {
+        "contactId": "contact-1",
+        "title": " Send follow-up ",
+        "dueDate": "2026-06-30",
+        "priority": "HIGH"
+      }
+    }
+  ]
+}

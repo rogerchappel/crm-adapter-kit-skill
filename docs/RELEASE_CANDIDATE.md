@@ -2,11 +2,12 @@
 
 ## Verification
 
-- `npm test`
-- `npm run check`
-- `npm run build`
-- `npm run smoke`
-- `bash scripts/validate.sh`
+- `npm test` - covers normalization, unsupported due-date shape, batch planning, Markdown summaries, and CLI exits.
+- `npm run check` - syntax checks CommonJS entrypoints.
+- `npm run build` - confirms package files are present.
+- `npm run smoke` - emits a dry-run CRM action for the valid contact fixture.
+- `node bin/crm-adapter-kit.js fixtures/batch-request.json --adapter=hubspot --format=markdown` - emits approval-packet summary.
+- `bash scripts/validate.sh` - runs combined release validation.
 
 ## Classification
 

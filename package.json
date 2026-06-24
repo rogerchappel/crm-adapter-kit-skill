@@ -34,5 +34,9 @@
     "SKILL.md",
     "README.md",
     "LICENSE"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/rogerchappel/crm-adapter-kit-skill/issues"
+  },
+  "homepage": "https://github.com/rogerchappel/crm-adapter-kit-skill#readme"
 }

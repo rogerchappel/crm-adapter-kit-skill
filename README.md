@@ -10,6 +10,14 @@ npm run smoke
 npm run release:check
 ```
 
+## Release Verification
+
+`npm run release:check` runs syntax checks, the placeholder build step, the
+node test suite, a CLI fixture smoke, and package content verification.
+`npm run package:smoke` asserts that the published tarball includes the CLI,
+source, docs, fixtures, skill file, README, license, security policy,
+contributing guide, and changelog.
+
 ## CLI
 
 ```bash
@@ -36,3 +44,9 @@ The CLI validates sanitized CRM requests, normalizes fields, and prints dry-run 
 ## Limitations
 
 The MVP targets payload planning and validation. Real CRM adapters, OAuth, retries, and sync state are out of scope.
+
+## Support Docs
+
+- [Security policy](SECURITY.md)
+- [Contributing guide](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)

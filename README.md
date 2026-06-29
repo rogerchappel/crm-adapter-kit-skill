@@ -4,7 +4,18 @@ Local-first CRM adapter planning kit for agent skills with schema checks and app
 
 ## Quickstart
 
+Install from npm after release:
+
 ```bash
+npm install -g crm-adapter-kit-skill
+crm-adapter-kit --help
+```
+
+Or run the checked-out repository locally:
+
+```bash
+npm install
+node bin/crm-adapter-kit.js fixtures/contact-request.json
 npm test
 npm run smoke
 npm run release:check

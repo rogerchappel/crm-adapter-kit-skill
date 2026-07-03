@@ -52,6 +52,19 @@ The CLI validates sanitized CRM requests, normalizes fields, and prints dry-run 
 - Every planned CRM write is marked approval-required.
 - Fixtures must not contain private customer data or credentials.
 
+
+## Verification
+
+Run the local quality gates before opening a pull request:
+
+```sh
+npm run lint
+npm test
+npm run smoke
+```
+
+`npm run lint` is an alias for the repository static check so contributors can use the common npm workflow without guessing the project-specific command.
+
 ## Limitations
 
 The MVP targets payload planning and validation. Real CRM adapters, OAuth, retries, and sync state are out of scope.

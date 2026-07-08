@@ -74,3 +74,14 @@ The MVP targets payload planning and validation. Real CRM adapters, OAuth, retri
 - [Security policy](SECURITY.md)
 - [Contributing guide](CONTRIBUTING.md)
 - [Changelog](CHANGELOG.md)
+## Development checks
+
+Run the same local gates that CI runs before opening a PR:
+
+```bash
+npm run check --if-present
+npm run build --if-present
+npm test --if-present
+npm run smoke --if-present
+```
+
